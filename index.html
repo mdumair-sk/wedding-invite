@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Reception - Umair & Ariba</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --burgundy: #6B1C23;
+            --burgundy-light: #8B2D35;
+            --gold: #C9A227;
+            --gold-light: #E8D5A3;
+            --cream: #FFF9F0;
+            --cream-dark: #F5EBE0;
+            --text-dark: #2C1810;
+            --text-muted: #5A4A42;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 50%, #EDE0D4 100%);
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(201, 162, 39, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(107, 28, 35, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(0deg);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) rotate(720deg);
+            }
+        }
+
+        .card {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+            width: 100%;
+            background: linear-gradient(180deg, #FFFEFA 0%, var(--cream) 100%);
+            border-radius: 4px;
+            padding: 50px 40px;
+            box-shadow: 
+                0 25px 80px rgba(107, 28, 35, 0.15),
+                0 10px 30px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            text-align: center;
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardEntrance 1s ease-out 0.3s forwards;
+        }
+
+        @keyframes cardEntrance {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Ornate border */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 2px solid var(--gold);
+            border-radius: 2px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Corner ornaments */
+        .corner-ornament {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            opacity: 0.7;
+        }
+
+        .corner-ornament svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--gold);
+        }
+
+        .corner-ornament.top-left { top: 20px; left: 20px; }
+        .corner-ornament.top-right { top: 20px; right: 20px; transform: scaleX(-1); }
+        .corner-ornament.bottom-left { bottom: 20px; left: 20px; transform: scaleY(-1); }
+        .corner-ornament.bottom-right { bottom: 20px; right: 20px; transform: scale(-1, -1); }
+
+        .bismillah {
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.6s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .bismillah-arabic {
+            font-family: 'Amiri', serif;
+            font-size: 2.2rem;
+            color: var(--burgundy);
+            line-height: 1.6;
+            margin-bottom: 8px;
+            direction: rtl;
+        }
+
+        .bismillah-english {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .divider:nth-of-type(1) { animation-delay: 0.7s; }
+        .divider:nth-of-type(2) { animation-delay: 0.9s; }
+        .divider:nth-of-type(3) { animation-delay: 1.1s; }
+        .divider:nth-of-type(4) { animation-delay: 1.3s; }
+
+        .divider-line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .divider-ornament {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        .hosts {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.8s forwards;
+        }
+
+        .host-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .host-and {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: var(--gold);
+            font-style: italic;
+            margin: 10px 0;
+        }
+
+        .invitation-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 450px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 1s forwards;
+        }
+
+        .invitation-text em {
+            font-style: italic;
+            color: var(--burgundy);
+        }
+
+        .couple-section {
+            margin: 35px 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 1.2s forwards;
+        }
+
+        .couple-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .couple-names {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .couple-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.2rem;
+            color: var(--burgundy);
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(107, 28, 35, 0.1);
+        }
+
+        .ampersand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .event-details {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 1.4s forwards;
+        }
+
+        .detail-row {
+            margin: 18px 0;
+        }
+
+        .detail-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .venue-name {
+            color: var(--burgundy);
+            font-weight: 600;
+        }
+
+        .closing-message {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+            line-height: 1.7;
+            max-width: 400px;
+            margin: 30px auto 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 1.6s forwards;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 35px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 1.8s forwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-light) 100%);
+            color: var(--cream);
+            box-shadow: 0 4px 15px rgba(107, 28, 35, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 28, 35, 0.4);
+            background: linear-gradient(135deg, var(--burgundy-light) 0%, var(--burgundy) 100%);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--burgundy);
+            border: 2px solid var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: var(--cream);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Responsive */
+        @media (max-width: 520px) {
+            .card {
+                padding: 40px 25px;
+            }
+
+            .bismillah-arabic {
+                font-size: 1.8rem;
+            }
+
+            .couple-name {
+                font-size: 2.6rem;
+            }
+
+            .ampersand {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+
+            .corner-ornament {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .particle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div class="card">
+        <!-- Corner Ornaments -->
+        <div class="corner-ornament top-left">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 35 Q5 5 35 5" stroke="currentColor" stroke-width="2" fill="none"/>
+                <circle cx="35" cy="5" r="3"/>
+                <circle cx="5" cy="35" r="3"/>
+                <path d="M10 30 Q10 10 30 10" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+            </svg>
+        </div>
+        <div class="corner-ornament top-right">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 35 Q5 5 35 5" stroke="currentColor" stroke-width="2" fill="none"/>
+                <circle cx="35" cy="5" r="3"/>
+                <circle cx="5" cy="35" r="3"/>
+                <path d="M10 30 Q10 10 30 10" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+            </svg>
+        </div>
+        <div class="corner-ornament bottom-left">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 35 Q5 5 35 5" stroke="currentColor" stroke-width="2" fill="none"/>
+                <circle cx="35" cy="5" r="3"/>
+                <circle cx="5" cy="35" r="3"/>
+                <path d="M10 30 Q10 10 30 10" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+            </svg>
+        </div>
+        <div class="corner-ornament bottom-right">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 35 Q5 5 35 5" stroke="currentColor" stroke-width="2" fill="none"/>
+                <circle cx="35" cy="5" r="3"/>
+                <circle cx="5" cy="35" r="3"/>
+                <path d="M10 30 Q10 10 30 10" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+            </svg>
+        </div>
+
+        <!-- Bismillah -->
+        <div class="bismillah">
+            <div class="bismillah-arabic">بسم الله الرحمن الرحيم</div>
+            <div class="bismillah-english">In the name of Allah, Most Gracious, Most Merciful</div>
+        </div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-ornament">&#10022;</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- Hosts -->
+<div class="hosts">
+    <div class="host-name">Md Ishaque Sahab</div>
+    <div class="host-and">and</div>
+    <div class="host-name">Md Muzammil Sahab</div>
+</div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-ornament">&#10022;</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- Invitation Text -->
+        <p class="invitation-text">
+    Request the honor of your company to share in their joy<br>
+    at the <em>Wedding Reception</em> of their beloved son
+</p>
+
+        <!-- Couple Names -->
+        <div class="couple-section">
+            <div class="couple-label">Celebrating the Union of</div>
+            <div class="couple-names">
+                <span class="couple-name">Umair</span>
+                <span class="ampersand">&</span>
+                <span class="couple-name">Ariba</span>
+            </div>
+        </div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-ornament">&#10022;</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- Event Details -->
+        <div class="event-details">
+            <div class="detail-row">
+                <div class="detail-label">Date</div>
+                <div class="detail-value">Saturday, March 28th, 2026</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Time</div>
+                <div class="detail-value">Program begins at 8:00 PM</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Venue</div>
+                <div class="detail-value">
+                    <span class="venue-name">Danish Celebration</span><br>
+                    Kamptee Road, Nagpur
+                </div>
+            </div>
+        </div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-ornament">&#10022;</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- Closing -->
+        <p class="closing-message">
+            We request your prayers for the couple's<br>happy and blessed future.
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="addToCalendar()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                Add to Calendar
+            </button>
+            <a href="https://maps.app.goo.gl/ytevxXmuxSV7TqQp7" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                View Location
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                
+                // Vary particle sizes
+                const size = 4 + Math.random() * 4;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Add to Google Calendar
+        function addToCalendar() {
+            const event = {
+                title: 'Wedding Reception - Umair & Ariba',
+                details: 'Wedding Reception hosted by Mr. and Mrs. Muzammil and Mr. Ilyas Sahab. We request your prayers for the couple\'s happy and blessed future.',
+                location: 'Danish Celebration, Kamptee Road, Nagpur',
+                startDate: '20260328T200000',
+                endDate: '20260328T230000'
+            };
+
+            const googleCalendarUrl = new URL('https://calendar.google.com/calendar/render');
+            googleCalendarUrl.searchParams.set('action', 'TEMPLATE');
+            googleCalendarUrl.searchParams.set('text', event.title);
+            googleCalendarUrl.searchParams.set('dates', `${event.startDate}/${event.endDate}`);
+            googleCalendarUrl.searchParams.set('details', event.details);
+            googleCalendarUrl.searchParams.set('location', event.location);
+            googleCalendarUrl.searchParams.set('sf', 'true');
+            googleCalendarUrl.searchParams.set('output', 'xml');
+
+            window.open(googleCalendarUrl.toString(), '_blank');
+        }
+
+          // Initialize particles on load
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+</body>
+</html>
